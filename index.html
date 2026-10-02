@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Final Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#0f1c2e;
+    --navy-900:#152b45;
+    --navy-800:#1d3a5c;
+    --navy-700:#28517d;
+    --navy-line:#2c4a6e;
+    --paper:#f4f6f8;
+    --paper-card:#ffffff;
+    --gold:#c99a3a;
+    --gold-light:#e8c876;
+    --gold-dim:#f2e4c2;
+    --ink:#16232f;
+    --ink-soft:#4a5a68;
+    --ink-faint:#8496a3;
+    --green:#2f7d58;
+    --green-bg:#e8f3ec;
+    --red:#b3402f;
+    --red-bg:#faeae7;
+    --radius:14px;
+    --shadow-card: 0 1px 2px rgba(15,28,46,0.06), 0 8px 24px rgba(15,28,46,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:32px 16px 56px;
+    line-height:1.5;
+  }
+  .mono{ font-family:'IBM Plex Mono','SFMono-Regular',Consolas,monospace; }
+
+  .app{
+    width:100%;
+    max-width:720px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    background:var(--navy-950);
+    border-radius:var(--radius) var(--radius) 0 0;
+    padding:20px 24px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .topbar::after{
+    content:"";
+    position:absolute;
+    top:-40%; right:-10%;
+    width:220px; height:220px;
+    background:radial-gradient(circle, rgba(201,154,58,0.18), transparent 70%);
+    pointer-events:none;
+  }
+  .topbar-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .brand{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .brand-eyebrow{
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    font-weight:600;
+  }
+  .brand-title{
+    font-size:19px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .stat-pill{
+    font-size:11px;
+    color:#cfe0f0;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:20px;
+    padding:5px 10px;
+    white-space:nowrap;
+  }
+  .stat-pill b{ color:#fff; }
+
+  .progress-track{
+    margin-top:16px;
+    height:6px;
+    border-radius:4px;
+    background:rgba(255,255,255,0.12);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius:4px;
+    transition:width 0.35s ease;
+    width:0%;
+  }
+  .progress-caption{
+    margin-top:8px;
+    font-size:11.5px;
+    color:#a9bdd0;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  /* ---------- Card body ---------- */
+  .card{
+    background:var(--paper-card);
+    border-radius:0 0 var(--radius) var(--radius);
+    box-shadow:var(--shadow-card);
+    padding:28px 24px 24px;
+  }
+
+  /* ---------- Intro screen ---------- */
+  .intro h1{
+    font-size:22px;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .intro p{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    margin:0 0 18px;
+  }
+  .rule-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .rule-item{
+    background:var(--paper);
+    border:1px solid #e3e8ec;
+    border-radius:10px;
+    padding:12px 14px;
+  }
+  .rule-item .num{
+    font-size:20px;
+    font-weight:700;
+    color:var(--navy-800);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .rule-item .lbl{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  .prev-attempt{
+    font-size:13px;
+    color:var(--ink-soft);
+    background:var(--gold-dim);
+    border:1px solid #e3cf98;
+    border-radius:10px;
+    padding:10px 14px;
+    margin-bottom:18px;
+  }
+  .btn{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    font-weight:600;
+    font-size:14.5px;
+    border-radius:10px;
+    padding:13px 20px;
+    transition:transform 0.08s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:active{ transform:scale(0.98); }
+  .btn-primary{
+    background:var(--navy-900);
+    color:#fff;
+    width:100%;
+  }
+  .btn-primary:hover{ background:var(--navy-800); }
+  .btn-primary:disabled{
+    background:#c7cfd6;
+    cursor:not-allowed;
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--navy-800);
+    border:1px solid #d3dbe1;
+  }
+  .btn-ghost:hover{ background:#eef2f5; }
+
+  /* ---------- Question nav dots ---------- */
+  .qnav{
+    display:grid;
+    grid-template-columns:repeat(10, 1fr);
+    gap:6px;
+    margin:16px 0 20px;
+  }
+  .qdot{
+    height:26px;
+    border-radius:6px;
+    border:1px solid #d8dee3;
+    background:#fff;
+    color:var(--ink-faint);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .qdot.answered{
+    background:var(--navy-900);
+    border-color:var(--navy-900);
+    color:#fff;
+  }
+  .qdot.current{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+  }
+
+  /* ---------- Question ---------- */
+  .q-eyebrow{
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .q-text{
+    font-size:17px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 18px;
+    line-height:1.45;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .option{
+    text-align:left;
+    background:#fff;
+    border:1.5px solid #dde4e9;
+    border-radius:10px;
+    padding:13px 14px;
+    font-size:14.5px;
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .option:hover{ border-color:var(--navy-700); }
+  .option .letter{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:12.5px;
+    color:var(--ink-faint);
+    background:var(--paper);
+    border-radius:5px;
+    width:22px; height:22px;
+    min-width:22px;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .option.selected{
+    border-color:var(--navy-900);
+    background:#f2f6fa;
+  }
+  .option.selected .letter{
+    background:var(--navy-900);
+    color:#fff;
+  }
+  .option:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+
+  .nav-row{
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+  }
+  .nav-row .btn-ghost{ flex:0 0 auto; }
+  .nav-row .btn-primary{ flex:1 1 auto; }
+
+  /* ---------- Results ---------- */
+  .result-head{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+  }
+  .score-dial{
+    width:104px;height:104px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    flex:0 0 auto;
+    background:conic-gradient(var(--gold) calc(var(--pct) * 1%), #e7ecf0 0);
+    position:relative;
+  }
+  .score-dial::before{
+    content:"";
+    position:absolute;
+    width:80px;height:80px;
+    border-radius:50%;
+    background:#fff;
+  }
+  .score-dial .pct{
+    position:relative;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:22px;
+    font-weight:700;
+    color:var(--navy-900);
+  }
+  .score-dial .frac{
+    position:relative;
+    font-size:11px;
+    color:var(--ink-faint);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .stamp{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:0.06em;
+    padding:10px 18px;
+    border-radius:8px;
+    border:3px solid currentColor;
+    transform:rotate(-3deg);
+    display:inline-block;
+  }
+  .stamp.pass{ color:var(--green); background:var(--green-bg); }
+  .stamp.fail{ color:var(--red); background:var(--red-bg); }
+  .result-sub{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+
+  .section-breakdown{
+    margin:22px 0;
+  }
+  .section-breakdown h3{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-faint);
+    margin:0 0 10px;
+  }
+  .sec-row{
+    display:grid;
+    grid-template-columns:150px 1fr 44px;
+    align-items:center;
+    gap:10px;
+    margin-bottom:7px;
+    font-size:12.5px;
+  }
+  .sec-name{ color:var(--ink-soft); }
+  .sec-bar-track{
+    height:8px;
+    background:#eef1f4;
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .sec-bar-fill{
+    height:100%;
+    background:var(--navy-800);
+    border-radius:4px;
+  }
+  .sec-frac{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--ink-faint);
+    text-align:right;
+  }
+
+  .review-toggle{
+    margin:8px 0 18px;
+  }
+
+  .review-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:20px;
+  }
+  .review-item{
+    border:1px solid #e3e8ec;
+    border-radius:10px;
+    padding:14px 15px;
+  }
+  .review-item.wrong{ border-color:#e9c9c1; background:var(--red-bg); }
+  .review-item.right{ border-color:#c9e0d2; background:var(--green-bg); }
+  .review-top{
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .review-top .tag-right{ color:var(--green); }
+  .review-top .tag-wrong{ color:var(--red); }
+  .review-q{
+    font-size:14px;
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .review-ans{
+    font-size:13px;
+    margin:2px 0;
+  }
+  .review-ans .lbl{ color:var(--ink-faint); }
+  .review-explain{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px dashed #d8dee3;
+  }
+
+  .result-actions{
+    display:flex;
+    gap:10px;
+  }
+  .result-actions .btn{ flex:1; }
+
+  footer.disclaimer{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--ink-faint);
+    margin-top:14px;
+  }
+
+  @media (max-width:420px){
+    .rule-grid{ grid-template-columns:1fr 1fr; }
+    .qnav{ grid-template-columns:repeat(8,1fr); }
+    .sec-row{ grid-template-columns:110px 1fr 40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+<!-- MLC results capture -->
+<div id="mlcGate" style="position:fixed;inset:0;z-index:99999;background:rgba(10,16,28,.82);display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;">
+  <form id="mlcGateForm" style="background:#fff;color:#1b1f27;width:100%;max-width:420px;padding:28px 26px;border-top:4px solid #1b1f27;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:left;">
+    <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:8px;">Final Exam</div>
+    <div style="font-size:22px;font-weight:700;line-height:1.2;margin-bottom:6px;">Before you begin</div>
+    <div style="font-size:14px;line-height:1.5;opacity:.75;margin-bottom:18px;">Enter your full name. Your results are recorded when you finish.</div>
+    <label for="mlcName" style="display:block;font-size:12px;font-weight:600;margin-bottom:6px;">Full name</label>
+    <input id="mlcName" autocomplete="name" required style="width:100%;box-sizing:border-box;font-size:16px;padding:12px;border:2px solid #1b1f27;margin-bottom:16px;outline:none;">
+    <button type="submit" style="width:100%;min-height:48px;font-size:15px;font-weight:700;background:#1b1f27;color:#fff;border:0;cursor:pointer;text-align:left;padding:0 16px;">Continue &rarr;</button>
+  </form>
+</div>
+<div id="mlcSaved" style="display:none;position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:99998;background:#1b1f27;color:#fff;font:600 13px system-ui,Arial,sans-serif;padding:10px 16px;"></div>
+<script>
+(function(){
+  var SHEET_URL = "https://script.google.com/macros/s/AKfycbwq10Rl16OwAAkfNLgHQcJK-uSB4uTkWBisG615MJ_WEqUNtLe3db-HZf1NPNpAHRRtFw/exec";
+  var QUIZ = "Final Exam";
+  var t0 = Date.now(), name = "";
+  try { name = sessionStorage.getItem("mlc-candidate-name") || ""; } catch(e){}
+  var gate = document.getElementById("mlcGate");
+  if (name) gate.style.display = "none";
+  document.getElementById("mlcGateForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var v = document.getElementById("mlcName").value.trim();
+    if (v.split(/\s+/).length < 2) { alert("Please enter your first and last name."); return; }
+    name = v; try { sessionStorage.setItem("mlc-candidate-name", v); } catch(e){}
+    gate.style.display = "none"; t0 = Date.now();
+  });
+  function toast(msg){ var el = document.getElementById("mlcSaved"); el.textContent = msg; el.style.display = "block"; setTimeout(function(){ el.style.display = "none"; }, 4000); }
+  window.MLC_REPORT = function(r){
+    var secs = Math.round((Date.now() - t0) / 1000);
+    var lines = [QUIZ, "Candidate: " + (name || "Unnamed"), "Score: " + r.score + "/" + r.total + " (" + r.pct + "%) — " + (r.passed ? "PASS" : "FAIL") + " (80% required)", ""];
+    if (r.breakdown) { lines.push("BREAKDOWN"); Object.keys(r.breakdown).forEach(function(k){ var b = r.breakdown[k]; lines.push("  " + k + ": " + b.correct + "/" + b.total); }); lines.push(""); }
+    lines.push("MISSED (" + r.missed.length + ")");
+    r.missed.forEach(function(m, i){ lines.push((i+1) + ". " + m.q); lines.push("   Picked: " + m.picked); lines.push("   Correct: " + m.correct); });
+    var row = {
+      submitted: new Date().toISOString(), candidate: name || "Unnamed", position: QUIZ,
+      reference: "Q-" + Date.now().toString(36).toUpperCase() + Math.floor(Math.random()*1000),
+      version: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
+      verdict: r.passed ? "PASS" : "FAIL", composite: r.score + "/" + r.total + " (" + r.pct + "%)",
+      numerical: "", reading: "", typingWpm: "", typingAccuracy: "",
+      timeUsed: Math.floor(secs/60) + "m " + (secs%60) + "s", answered: r.total + "/" + r.total,
+      device: navigator.userAgent, report: lines.join("\n")
+    };
+    var body = JSON.stringify(row);
+    (function attempt(n){
+      fetch(SHEET_URL, { method:"POST", mode:"no-cors", keepalive:true, headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: body })
+        .then(function(){ toast("Results recorded."); })
+        .catch(function(err){ console.warn("MLC results send failed (attempt " + n + ")", err); if (n < 4) setTimeout(function(){ attempt(n+1); }, n*3000); else toast("Could not record results — please tell your supervisor."); });
+    })(1);
+  };
+})();
+</script>
+<!-- /MLC results capture -->
+
+<div class="app">
+
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <div class="brand-eyebrow">MLC · New Hire Certification</div>
+        <div class="brand-title">Final Exam — All Modules</div>
+      </div>
+      <div class="stat-pill mono" id="statPill">Attempt <b>1</b></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-caption mono">
+      <span id="progressLabel">Not started</span>
+      <span id="progressPct">0%</span>
+    </div>
+  </div>
+
+  <div class="card" id="cardRoot">
+    <!-- content injected by JS -->
+  </div>
+
+  <footer class="disclaimer">100 questions · 80% required to pass (80 of 100) · Covers all 13 MLC training modules</footer>
+</div>
+
+<script>
+(function(){
+
+    const QUESTIONS = [
+    { section:"Collections 101", q:"MLC calls a patient on behalf of a clinic to collect an unpaid balance. The clinic never bills its own patients directly for this kind of debt. What is MLC engaged in, and why does it matter?",
+      options:[
+        "Collection — MLC is acting as the clinic's internal billing department",
+        "Recovery — MLC is a third party with no prior relationship to the consumer, which is why verification and the Mini-Miranda exist",
+        "Neither — only lawsuits count as debt collection",
+        "Recovery — but only because a specialist personally spoke with the consumer"
+      ], correct:1,
+      explain:"Recovery is a third party collecting money owed to another creditor. Because the consumer never signed anything with MLC, verification and the Mini-Miranda protect against disclosing debt information to the wrong person." },
+    { section:"Collections 101", q:"A specialist tells a consumer, “I hear you — that sounds really frustrating,” without agreeing that the debt is invalid. Which skill is this, and what is the key distinction from a nearby skill?",
+      options:[
+        "Acknowledgement — it validates what was said without conceding the debt is invalid, which is different from empathy's deeper understanding of the situation",
+        "Reassurance — it is designed to prevent buyer's remorse after a payment is agreed to",
+        "Active listening — it requires paraphrasing the consumer's words back to them",
+        "Take ownership — it means accepting responsibility for the client's error"
+      ], correct:0,
+      explain:"Acknowledgement recognizes what the consumer said. It is easy to confuse with empathy, but acknowledging is not agreeing that the debt is invalid." },
+    { section:"Collections 101", q:"In the eight-part talk-off, which step comes immediately after “status the account”?",
+      options:[
+        "Fact-find — asking questions before naming a number",
+        "Demand payment — always asking for payment in full first",
+        "Negotiate — offering a specific payment plan",
+        "Close the call — confirming dates and amounts"
+      ], correct:1,
+      explain:"The order is: identify, verify, Mini-Miranda, status the account, demand payment (PIF first), fact-find, negotiate, close. Status the account is immediately followed by demanding payment in full." },
+    { section:"Collections 101", q:"A consumer owes $700 and cannot pay in full today. What is the specialist authorized to offer, and why?",
+      options:[
+        "Whatever the consumer proposes, since $700 exceeds both tiers",
+        "Up to 2 payments — because all balances default to the lower tier unless a senior rep approves more",
+        "Up to 3 payments — because balances over $500 are capped at 3 payments maximum",
+        "Payment in full only — balances over $500 cannot be placed on a plan without escalation"
+      ], correct:2,
+      explain:"Balances over $500 are capped at 3 payments maximum. $700 falls into that tier, matching the $502.23 example used in the training." },
+    { section:"Collections 101", q:"A consumer says “no, not today” to a payment-in-full request. According to the training's basic truths of negotiation, what does this moment represent?",
+      options:[
+        "A cue to immediately offer the lowest available payment plan",
+        "A stall that must be redirected back to collecting immediately",
+        "A dispute that requires the specialist to stop collecting and escalate",
+        "The actual start of the negotiation, not a signal to end the call"
+      ], correct:3,
+      explain:"One of the seven basic truths is that negotiations don't start until someone says no. A “no” is answered with a question, not treated as the end of the call." },
+    { section:"Collections 101", q:"A consumer says, “I never received those services — I don't think I owe this.” Is this an objection or a stall, and what does that distinction change?",
+      options:[
+        "Neither — disputing services rendered is treated as a dispute of debt validity outside this framework",
+        "A stall — it's an intentional delay, so the specialist should ask what day they'll resolve it",
+        "An objection — it's a reason for disagreeing with the debt, handled with the six-step objection process rather than a stall response",
+        "A stall — because most disputes are really just a way to avoid paying today"
+      ], correct:2,
+      explain:"An objection is a reason for disagreeing with the debt itself. A stall is an intentional delay in taking action. “I never received those services” is a dispute-style objection, not a stall." },
+    { section:"Collections 101", q:"Which step of the six-step objection process do new hires most often skip, and what is the consequence?",
+      options:[
+        "Redirecting the conversation back to collecting — skipping it means resolving the objection well but never asking for payment again",
+        "Listening to the objection — skipping it causes the specialist to misdiagnose the real issue",
+        "Asking open-ended questions — skipping it prevents proper fact-finding",
+        "Acknowledging and neutralizing — skipping it makes the consumer feel dismissed"
+      ], correct:0,
+      explain:"New hires often resolve the objection well and then end the call without ever redirecting back to collecting — step six, never skip it." },
+    { section:"Collections 101", q:"A consumer says, “I'll mail the payment.” What is the underlying pattern behind the recommended response, and what is that response?",
+      options:[
+        "Every stall is treated as a dispute — “I'll need to note that as a dispute of the debt.”",
+        "Every stall is accepted at face value, since pushing further risks damaging rapport — “Okay, we'll watch for it.”",
+        "Every stall requires immediate escalation to a senior rep — “Let me transfer you.”",
+        "Every stall is answered with a question that turns a vague delay into a specific date — “What day did you get that mailed to us?”"
+      ], correct:3,
+      explain:"Stalls are answered with a question that converts a vague delay into a specific, trackable date — not accepted, escalated, or treated as a dispute." },
+    { section:"Collections 101", q:"Which of these is NOT one of the reasons the training gives for why debt recovery work matters?",
+      options:[
+        "Recovered money returns to the economy and eventually to American families",
+        "It guarantees a consumer's credit score will improve once the debt is resolved",
+        "Recovery keeps the cost of goods and services lower for consumers generally",
+        "Creditors get paid for work or goods they already provided"
+      ], correct:1,
+      explain:"The training cites economic return, lower consumer costs, and creditors getting paid — it never claims a credit score guarantee." },
+    { section:"Collections 101", q:"A specialist tells a consumer, “I don't know why Danny told you that — that's not right, that's on the billing department.” Which skill does this violate, and why does it matter?",
+      options:[
+        "Respect — the specialist used internal jargon the consumer wouldn't understand",
+        "Meet commitments — the specialist promised something they couldn't deliver",
+        "Take ownership — consumers don't care who made the mistake, and deflecting blame makes the whole company look unreliable",
+        "Reassurance — the specialist failed to build the consumer's confidence in a solution"
+      ], correct:2,
+      explain:"Take ownership means never deflecting blame to another department or person. To the consumer, the specialist represents the whole company and its client." },
+    { section:"Collections 101", q:"A specialist promises a callback at 3 p.m. but doesn't call until the next morning. Beyond losing that one payment, what is the training's stated risk?",
+      options:[
+        "It teaches the consumer that nothing said on the call is reliable, and the next specialist inherits that damaged trust",
+        "It automatically voids any payment arrangement already agreed to",
+        "It counts as a compliance violation under the FDCPA",
+        "It has no lasting effect as long as the specialist apologizes on the next call"
+      ], correct:0,
+      explain:"A broken promise doesn't just cost one payment — it teaches the consumer that nothing said is reliable, and that damaged trust carries forward to whoever calls next." },
+    { section:"Collections 101", q:"Why does the training frame questions about alternate income sources (borrowing from family, a yard sale, a payday advance) as “offering alternatives” rather than pressure tactics?",
+      options:[
+        "Because these questions are only appropriate once a consumer has already disputed the debt",
+        "Because these questions are legally required disclosures under the FDCPA",
+        "Because the specialist must exhaust every option before escalating to a senior rep",
+        "Because these are alternatives the consumer may not have considered, raised once rapport is established, not as an aggressive first move"
+      ], correct:3,
+      explain:"These uncomfortable questions are framed as offering alternatives the consumer may not have considered — not pressure, and not a legal requirement." },
+    { section:"Compliance", q:"A business regularly sues consumers over unpaid commercial invoices between two companies. Does the FDCPA cover this activity?",
+      options:[
+        "Yes, but only if the business collects debts for itself under a different name",
+        "Yes — the FDCPA applies to any debt collection activity regardless of debt type",
+        "No — the FDCPA applies to debts for personal, family, or household purposes, not commercial invoices",
+        "No — the FDCPA never applies to lawsuits, only to phone calls and letters"
+      ], correct:2,
+      explain:"The FDCPA covers debts for personal, family, or household purposes, collected by businesses that regularly collect debts owed to third parties. A commercial invoice between two businesses doesn't qualify." },
+    { section:"Compliance", q:"A patient receives ten calls in one day about a $300 doctor bill. Which FDCPA prohibition category does this fall under?",
+      options:[
+        "False, deceptive, or misleading representations — misstating the urgency of the debt",
+        "Harassment or abuse — repeated or excessive calls intended to annoy or harass",
+        "Unfair collection practices — charging fees not permitted by the agreement",
+        "Improper communication — contacting outside permitted hours"
+      ], correct:1,
+      explain:"Excessive or repeated calls intended to annoy or harass fall under harassment or abuse, one of the six FDCPA prohibition categories, and is the one that happens most often by accident." },
+    { section:"Compliance", q:"A collector tells a patient, “I'm calling from the legal department” to make the call feel more serious, when no legal action is actually planned. Which category of violation is this?",
+      options:[
+        "Legal process abuse — filing in an improper venue",
+        "Unfair collection practices — using deceptive forms or documents",
+        "False, deceptive, or misleading representations — falsely claiming to be an attorney or government representative",
+        "Improper communication — contacting a represented consumer directly"
+      ], correct:2,
+      explain:"Falsely claiming affiliation with a legal department or an attorney is a false or misleading representation, one of the most dangerous and common categories in practice." },
+    { section:"Compliance", q:"A consumer writes a check dated for next Friday. The collector deposits it on Wednesday. Which FDCPA category does this violate?",
+      options:[
+        "Unfair collection practices — depositing or threatening to deposit postdated checks early",
+        "False, deceptive, or misleading representations — misstating the amount of the debt",
+        "Legal process abuse — attempting to collect a discharged debt",
+        "Validation and verification violations — failing to send written notice in time"
+      ], correct:0,
+      explain:"Depositing a postdated check early is an unfair collection practice. If a consumer dates a check for a specific day, it must run on that day, not before." },
+    { section:"Compliance", q:"A collector keeps calling a patient at work after being clearly told not to. Which FDCPA category does this fall under, and what makes this category especially risky for new hires?",
+      options:[
+        "Harassment or abuse — because it involves repeated contact regardless of what was previously said",
+        "Improper communication — most items in this category depend on remembering something the consumer said earlier in a prior call",
+        "Unfair collection practices — because workplace calls expose debt information to coworkers",
+        "Legal process abuse — because it violates venue rules for where contact may occur"
+      ], correct:1,
+      explain:"Improper communication includes contacting a consumer at work after being told not to. It's risky because it depends on remembering instructions from an earlier interaction, not just following a blanket rule." },
+    { section:"Compliance", q:"A validation letter says, “You owe $1,200,” but never names the hospital or doctor's office the debt is owed to. Why is this a violation on its own?",
+      options:[
+        "Naming an amount without naming the creditor is itself a violation, even without any other false statement",
+        "It isn't a violation as long as the amount is accurate",
+        "It's only a violation if the consumer later disputes the amount",
+        "It's only a violation if the letter also fails to include the Mini-Miranda"
+      ], correct:0,
+      explain:"The validation notice must name the creditor. Naming an amount owed without naming who it's owed to is itself a violation — the subtle point new hires often miss." },
+    { section:"Compliance", q:"A collector files a lawsuit against a consumer in a county far from where they live or received services, making it hard for them to appear in court. What is this called?",
+      options:[
+        "A bona fide error — an unintentional filing mistake",
+        "An empty legal threat — threatening action that isn't actually intended",
+        "Venue abuse — filing in a location that is inconvenient or impossible for the consumer to defend themselves in",
+        "A cease and desist violation — contacting a consumer after they requested no further contact"
+      ], correct:2,
+      explain:"Venue abuse means filing where it's inconvenient or impossible for the consumer to defend themselves — one of the legal process abuse violations." },
+    { section:"Compliance", q:"What is a “bona fide error” under the FDCPA, and how should a specialist think about it?",
+      options:[
+        "A clerical mistake that has no legal consequence at all",
+        "A deliberate violation that carries reduced penalties if disclosed voluntarily",
+        "An error that automatically voids any damages owed to the consumer",
+        "An unintentional violation that serves as a recognized legal defense — not something to plan around or rely on"
+      ], correct:3,
+      explain:"A bona fide error is an unintentional FDCPA violation. It's a recognized defense, but the training is explicit that it's a defense, not a cushion to lean on." },
+    { section:"Compliance", q:"A collection practice technically doesn't break any specific FDCPA rule, but a specialist wonders if it's still risky. What does UDAAP add to the picture?",
+      options:[
+        "UDAAP only applies once a consumer has filed a formal complaint with the CFPB",
+        "UDAAP only applies to banks and lenders, not to third-party debt collectors like MLC",
+        "Even if a practice clears the FDCPA, it can still be unfair, deceptive, or abusive under UDAAP — there's no loophole to rely on",
+        "UDAAP replaces the FDCPA entirely for any practice not explicitly listed in the FDCPA"
+      ], correct:2,
+      explain:"UDAAP is the safety net: even a practice that clears the FDCPA can still be unfair, deceptive, or abusive. “It wasn't specifically prohibited” is not a defense." },
+    { section:"Compliance", q:"A collector tells a neighbor, “Can you have them call us back about their unpaid bill?” without stating a dollar amount. Has a prohibited disclosure occurred?",
+      options:[
+        "Yes — revealing that a debt exists is the violation; you don't need to state an amount to breach the rule",
+        "No — disclosure only occurs if a specific dollar amount is mentioned",
+        "No — speaking with a neighbor is always permitted as long as you don't ask them to pay",
+        "Yes, but only because the request came from a third party rather than the consumer"
+      ], correct:0,
+      explain:"Revealing that a debt exists to anyone other than the consumer, their spouse, or their attorney is the violation — even without naming an amount." },
+    { section:"Compliance", q:"When calling a third party solely to obtain location information, which of these is a required constraint?",
+      options:[
+        "You may contact the same third party as often as needed until they provide useful information",
+        "Identify yourself by name, but never state that you are collecting a debt or reveal that one exists",
+        "You may use a postcard as long as it doesn't mention a specific dollar amount",
+        "You must obtain the consumer's permission before contacting any third party for location information"
+      ], correct:1,
+      explain:"Location-information calls have strict constraints: identify yourself by name, never reveal that a debt exists, contact each third party only once (barring new or corrected information), and never use postcards or marked envelopes." },
+    { section:"Compliance", q:"A consumer mails a signed letter demanding all communication stop. What is required for this to be legally binding, and what does it actually stop?",
+      options:[
+        "It must be in writing to be binding, and it stops communication — not collection, so a lawsuit can still proceed",
+        "It can be given verbally or in writing, and it stops all collection activity including any lawsuit",
+        "It must be notarized to be binding, and it stops both communication and collection",
+        "It only applies to phone calls, so letters and legal notices can continue regardless"
+      ], correct:0,
+      explain:"A cease-and-desist request must be in writing to trigger the legal requirement. It stops communication, not collection — the debt and any lawsuit remain live." },
+    { section:"Compliance", q:"A specialist mentions a patient's overdue balance out loud at their desk, where a coworker not involved in the account overhears. Could this be a HIPAA disclosure?",
+      options:[
+        "No — HIPAA only covers written and electronic records, not spoken conversation",
+        "Yes — oral information counts as PHI, so saying it out loud where someone else can hear is a disclosure",
+        "No — disclosures only count if the information is shared outside the company entirely",
+        "Yes, but only if the coworker repeats the information to someone else afterward"
+      ], correct:1,
+      explain:"PHI includes oral information. Saying protected health information out loud where an uninvolved person can hear it is itself a disclosure." },
+    { section:"Compliance", q:"A consumer says, “I filed for Chapter 7 last month,” but offers no paperwork to prove it. What does the automatic stay require, and from what point does it apply?",
+      options:[
+        "Collection may continue until the account is formally flagged by a supervisor",
+        "Collection may continue until the specialist independently verifies the bankruptcy filing with the court",
+        "Collection must stop only once documentation is received by the specialist",
+        "Collection must stop on the statement alone — the stay is effective from the moment of filing, regardless of when the collector learns of it"
+      ], correct:3,
+      explain:"You don't need proof before you stop — stop on the statement, verify afterward. The automatic stay takes effect at the moment of filing, so “we didn't know” is a weak position." },
+    { section:"Regulation F", q:"What is the relationship between Regulation F and the FDCPA, and why does “safe harbor” matter to a specialist personally?",
+      options:[
+        "Regulation F is the CFPB's operating instructions for the FDCPA, and following it exactly protects the specialist personally — improvising loses that protection",
+        "Regulation F replaced the FDCPA in 2021, and safe harbor means the CFPB cannot issue fines under the new rule",
+        "Regulation F is unrelated to the FDCPA, and safe harbor only protects the company, not individual specialists",
+        "Regulation F is a voluntary guideline, and safe harbor means following it is optional but recommended"
+      ], correct:0,
+      explain:"Regulation F implements the FDCPA. Safe harbor means following the rule exactly as written protects you personally — which is why the LCM rules are a closed list, not general guidance." },
+    { section:"Regulation F", q:"A consumer has three separate accounts with MLC. How does the 7-in-7 call frequency limit apply across those accounts?",
+      options:[
+        "All three accounts share a single combined count of 7 attempts per week",
+        "Each account (each debt) carries its own separate weekly count of 7 attempts",
+        "Only the account with the highest balance is subject to the 7-in-7 limit",
+        "The limit only applies once the consumer has been successfully contacted on any one account"
+      ], correct:1,
+      explain:"The 7-in-7 limit is per debt, not per consumer — the most commonly missed fact in this module. Three accounts means three separate counts." },
+    { section:"Regulation F", q:"Why is a Limited-Content Message (LCM) legally different from a regular voicemail that mentions the debt?",
+      options:[
+        "An LCM is identical to a regular voicemail but recorded at a lower volume for privacy",
+        "An LCM is only different because it's left after business hours",
+        "An LCM is a message the consumer must specifically request in advance",
+        "An LCM is restricted enough in content that it does not count as a “communication” under the FDCPA, so it can't trigger disclosure or validation-notice requirements"
+      ], correct:3,
+      explain:"An LCM's restricted content means it isn't a legal “communication.” That's what makes it safe to leave without third-party disclosure risk or starting the validation clock." },
+    { section:"Regulation F", q:"A specialist leaves a voicemail ending with, “Please call me back to discuss your account.” Why does this break an otherwise-compliant LCM?",
+      options:[
+        "Because it fails to include a suggested callback time",
+        "Because the phrase is too long to fit within the LCM's required elements",
+        "Because “discuss your account” turns the message into a communication, even though it sounds harmless",
+        "Because it doesn't include the word “debt collector,” which is required in every voicemail"
+      ], correct:2,
+      explain:"“Discuss your account” sounds harmless but breaks the LCM. The safe alternative simply asks for a return call, without stating what it concerns." },
+    { section:"Regulation F", q:"What are the permitted contact hours under Regulation F, and whose time zone determines them?",
+      options:[
+        "8:00 a.m. to 9:00 p.m. in MLC's local time, regardless of where the consumer lives",
+        "8:00 a.m. to 9:00 p.m. in the consumer's local time, not MLC's",
+        "9:00 a.m. to 5:00 p.m., strictly business hours, in either party's time zone",
+        "There are no fixed hours as long as the consumer has answered a call previously"
+      ], correct:1,
+      explain:"The calling window is the consumer's local time, not MLC's — easy to get wrong on a multi-state floor." },
+    { section:"Regulation F", q:"Why doesn't leaving a Limited-Content Message start the validation notice's 5-day clock, while a phone conversation does?",
+      options:[
+        "Because the clock only starts on a “communication,” and an LCM is specifically defined as not being one",
+        "Because voicemails are never treated as legal evidence of contact",
+        "Because the validation notice clock only starts after a written letter has been sent first",
+        "Because LCMs can only be left outside of permitted calling hours"
+      ], correct:0,
+      explain:"The validation notice clock starts on a communication. Since an LCM is defined as not being a communication, it doesn't trigger that requirement." },
+    { section:"Regulation F", q:"A consumer says, “I dispute this debt,” mid-call. What are the specialist's required next actions?",
+      options:[
+        "Explain in detail why the debt is valid before ending the call",
+        "Continue the talk-off as normal, since a verbal dispute doesn't carry legal weight",
+        "Immediately offer a discounted settlement to resolve the dispute on the spot",
+        "Stop collecting on that call, record the dispute in the consumer's own words, and hand it to the escalation contact"
+      ], correct:3,
+      explain:"The specialist must stop collecting on that call, record the dispute verbatim, and escalate — never argue the debt or decide the outcome themselves." },
+    { section:"Regulation F", q:"Which of these is one of the four “red line” prohibited practices under Regulation F and the FDCPA?",
+      options:[
+        "Public disclosure of debt information",
+        "Charging a $2.95 convenience fee for processing a card payment",
+        "Leaving more than one voicemail per week on an account",
+        "Asking a consumer for their date of birth during verification"
+      ], correct:0,
+      explain:"The four red lines are harassment/abuse/threats, false or misleading statements, unfair or deceptive practices, and public disclosure of debt information." },
+    { section:"Closed States", q:"Under the ACA's definitions, what specifically makes a state “closed,” and what is the practical effect on a call there?",
+      options:[
+        "It only affects in-person collection visits, not phone calls or letters",
+        "It means the debt is legally forgiven and no longer owed by the consumer",
+        "It requires a license and/or bond to collect there, and since MLC doesn't hold that license, we cannot ask the consumer to pay",
+        "It means MLC must charge a higher processing fee to consumers in that state"
+      ], correct:2,
+      explain:"A closed state requires a license or bond MLC doesn't hold, so MLC cannot ask for payment there — the debt itself remains unaffected." },
+    { section:"Closed States", q:"Why does a specialist never give the Mini-Miranda on a closed-state call?",
+      options:[
+        "Because closed-state calls are always inbound, and the Mini-Miranda only applies to outbound calls",
+        "Because closed-state consumers have typically already heard it on a previous call",
+        "Because the Mini-Miranda is legally optional in every state under the FDCPA",
+        "Because the Mini-Miranda announces an attempt to collect a debt, which MLC isn't licensed to attempt in that state"
+      ], correct:3,
+      explain:"The Mini-Miranda states the call is an attempt to collect a debt. Saying it in a closed state would announce doing the one thing MLC isn't licensed to do there." },
+    { section:"Closed States", q:"After delivering the closed-state script, a consumer asks, “So what would you like me to do about it?” and the specialist responds, “So what would you like to do about it?” Why is repeating this phrasing a problem?",
+      options:[
+        "It's a softened request for payment, which is never allowed on a closed-state call regardless of phrasing",
+        "It's acceptable because the consumer asked the question first",
+        "It only becomes a problem if the specialist also names a specific dollar amount",
+        "It's fine as long as the specialist doesn't explicitly use the word “pay”"
+      ], correct:0,
+      explain:"“What would you like to do about it” is a request for payment wearing a disguise — it crosses the line regardless of who raised the phrase first." },
+    { section:"Closed States", q:"A closed-state consumer asks, “Does that mean I don't have to pay it?” What is the key idea behind the approved response?",
+      options:[
+        "The specialist should decline to answer and transfer the call to a supervisor",
+        "Yes, the debt is entirely forgiven because the state is closed",
+        "No, they are still required to pay in full immediately regardless of state",
+        "MLC isn't asking them to pay, but a voluntary payment can still be processed if the consumer wants to make one"
+      ], correct:3,
+      explain:"MLC isn't asking for payment, but a voluntary payment can still be processed. That distinction is the whole deck in one sentence." },
+    { section:"Closed States", q:"What is described as the most serious thing a specialist could do on a closed-state call?",
+      options:[
+        "Asking the consumer for an address in an open state to get around the restriction",
+        "Reading the required script slightly out of order",
+        "Forgetting to mention a forwarding agency's contact information",
+        "Taking more than five minutes to complete the call"
+      ], correct:0,
+      explain:"Asking for a different address to sidestep the closed-state restriction is circumventing the law — the most serious violation named in this deck." },
+    { section:"Closed States", q:"What must a specialist do before leaving a closed-state account, and what happens if they skip it?",
+      options:[
+        "Nothing further is required once the script has been read aloud to the consumer",
+        "Email compliance directly; skipping it has no effect since the account is already flagged automatically",
+        "Update the address in DebtNet so the red restricted warning appears; skipping it means the next specialist may unknowingly run a full talk-off into a closed state",
+        "Close the account permanently; skipping it means the account remains open indefinitely"
+      ], correct:2,
+      explain:"The red restricted warning only appears if someone updates the address — that someone is whoever took the call. Skipping it risks the next specialist unknowingly violating the restriction." },
+    { section:"TARP", q:"Expand the TARP acronym in its fixed order, and explain why that order never changes.",
+      options:[
+        "Text, Artificial Intelligence, Robo calls, Prerecorded messages — the fixed order makes the four-character account code readable at a glance",
+        "Telephone, Auto-dial, Recorded, Permission — the order follows the alphabetical sequence of the words",
+        "Text, Approval, Recorded calls, Phone consent — the order matches how DebtNet stores the fields internally",
+        "Talk, Alert, Response, Payment — the order reflects the sequence of a typical call"
+      ], correct:0,
+      explain:"TARP stands for Text, Artificial Intelligence, Robo calls, and Prerecorded messages. The fixed order is positional, so the code can be read at a glance without guessing." },
+    { section:"TARP", q:"According to the training, what is the TCPA's core purpose “above all” else?",
+      options:[
+        "Increasing the number of collection calls a company may place per week",
+        "Giving consumers control over who can contact them and how",
+        "Standardizing licensing requirements for collection agencies across states",
+        "Eliminating the need to verify a consumer's identity before discussing an account"
+      ], correct:1,
+      explain:"Above all, the TCPA exists to give consumers control over who contacts them and how — TARP is that control, recorded on the account." },
+    { section:"TARP", q:"A dialer campaign reaches 200 numbers without consent. According to the training's penalty framework, how many violations does this represent, and roughly how much could a single violation cost if found willful or knowing?",
+      options:[
+        "2 violations — one for the campaign and one for the number list used",
+        "1 violation for the entire campaign, capped at $500 regardless of scale",
+        "200 violations, but capped at a combined total of $500 for the whole campaign",
+        "200 violations — one per call or text — each potentially costing up to $1,500 if willful or knowing"
+      ], correct:3,
+      explain:"Do the arithmetic: 200 numbers without consent is 200 violations, not one. Each is $500, rising to $1,500 if willful or knowing." },
+    { section:"TARP", q:"A consumer has given full TARP consent for all four channels. Does that exempt the account from Regulation F's 7-in-7 call frequency limit?",
+      options:[
+        "Yes, but only up to double the normal 7-in-7 limit",
+        "Yes — full TARP consent overrides all other frequency restrictions",
+        "No — TARP governs HOW you may contact someone; Regulation F still governs HOW OFTEN",
+        "No, but only because TARP consent expires after 30 days"
+      ], correct:2,
+      explain:"TARP and Reg F answer different questions. TARP is about how you may contact someone; Reg F still governs how often, regardless of consent." },
+    { section:"TARP", q:"An account's TARP code shows an “X” in the robo-calls position. What does this mean, and what should the specialist do?",
+      options:[
+        "The consumer has declined that specific channel; it must be respected and never re-asked around",
+        "Consent for that channel has not yet been obtained; it's an opportunity to ask for it",
+        "The field was never updated and should be treated as blank",
+        "The consumer is undecided and should be asked again on the next call"
+      ], correct:0,
+      explain:"An X is a decline that must be respected — never re-ask around it. An O, by contrast, means consent still needs to be obtained and is an opportunity to ask." },
+    { section:"TARP", q:"When is the ideal moment to ask a consumer for TARP consent, according to the training?",
+      options:[
+        "Only after the Mini-Miranda and immediately before discussing the balance",
+        "As the very first line of the call, before any other discussion",
+        "After the consumer has been verified, while the call is going constructively — not as the opening line, and not as they're hanging up",
+        "Only at the very end of the call, once a payment has already been agreed to"
+      ], correct:2,
+      explain:"Ask once the consumer is verified and the call is going well — not as an opening line, and not as an afterthought while they're hanging up." },
+    { section:"Validation", q:"What is the key difference between “validation” and “verification” in this training's terminology?",
+      options:[
+        "Validation happens after a dispute; verification happens before any contact with the consumer",
+        "Validation and verification are two names for the exact same requirement, used interchangeably",
+        "Validation is only required for medical debts, while verification applies to all other debt types",
+        "Validation is the initial written notice sent at the outset disclosing the debt; verification is what must be obtained and sent if the consumer disputes in writing"
+      ], correct:3,
+      explain:"Validation is the notice sent at the start of the relationship. Verification is what's obtained and sent only if the consumer disputes in writing — learners mix these two constantly." },
+    { section:"Validation", q:"A specialist discovers that no validation letter was ever sent, and today is the first contact with the consumer. What is the deadline to send one?",
+      options:[
+        "Within 24 hours of this contact",
+        "Within 5 business days of this contact",
+        "Within 30 calendar days of this contact",
+        "There is no deadline as long as the account was recently assigned"
+      ], correct:1,
+      explain:"If a validation letter hasn't been sent, one must go out within 5 business days of any contact with the consumer — the only hard deadline in this module." },
+    { section:"Validation", q:"A consumer says the total balance on their validation letter doesn't match the amount just quoted on the phone. What is the most likely explanation, and how should the specialist handle it?",
+      options:[
+        "The consumer is misreading the letter, and the specialist should simply repeat the current balance",
+        "The letter must contain a clerical error and should be immediately corrected and resent",
+        "The letter's total is stated as of the day validation was sent, so an older letter may show a different figure — explain the difference rather than arguing it",
+        "This indicates the account was validated for the wrong consumer entirely"
+      ], correct:2,
+      explain:"The letter's total reflects the day validation was sent. A consumer quoting an older letter isn't wrong — explain the difference, don't argue it." },
+    { section:"Validation", q:"A specialist wants to check whether validation has been sent on an account. Which sequence of DebtNet steps checks one of the three required places?",
+      options:[
+        "Check only the account's priority code, since that alone reflects validation status",
+        "Click Notices, then immediately request a resend regardless of what's shown",
+        "Click the Debtor button, then Save, without checking any other screen",
+        "Click ValidNoti, then MLC, then read the list — if anything is listed, a validation letter still needs to go out"
+      ], correct:3,
+      explain:"One of the three places to check is ValidNoti → MLC → read the list. If information is listed there, a validation letter needs to be sent." },
+    { section:"Validation", q:"A consumer says, “I never received that letter.” There is no returned mail on the account. What should the specialist assume, and why?",
+      options:[
+        "The letter should always be resent immediately whenever a consumer claims non-receipt",
+        "MLC assumes the letter was properly delivered, since a claim alone — without returned mail — is not grounds for a resend",
+        "The account should be flagged as invalid and collection should stop entirely",
+        "The specialist should ask the consumer to prove non-receipt in writing before continuing the call"
+      ], correct:1,
+      explain:"A claim of non-receipt alone is not grounds for a resend. If there's no returned mail, MLC assumes the letter was properly delivered." },
+    { section:"Validation", q:"A validation letter went out three days ago, and the consumer now says they moved last month. Should the specialist update the address and resend?",
+      options:[
+        "No — a resend is only appropriate if the letter was returned as undeliverable",
+        "No — once a letter is sent, it is never resent regardless of new information",
+        "Yes — this is the distinct exception: learning of a move within the first several days of sending means updating the address and resending",
+        "Yes, but only if the consumer provides written proof of their new address first"
+      ], correct:2,
+      explain:"This is the distinct case from a bare non-receipt claim: learning of a move within the first several days of sending means updating the address and resending, since time to validation isn't lost." },
+    { section:"Validation", q:"Two consumers are jointly responsible on an account. In whose name does a validation letter go out?",
+      options:[
+        "Both responsible parties, each receiving a separate letter",
+        "The primary responsible party on the account only",
+        "Whichever party most recently made contact with MLC",
+        "Neither party — validation letters are only required for single-party accounts"
+      ], correct:1,
+      explain:"Validation letters are only sent in the name of the primary on an account — which is why a good address for the primary is imperative." },
+    { section:"Validation", q:"Which of these is a required content item in the Model Validation Notice (MVN)?",
+      options:[
+        "A list of every prior collector who has worked the account",
+        "The specialist's personal extension number",
+        "The account's current priority code",
+        "The name of the original creditor"
+      ], correct:3,
+      explain:"Required contents include the amount of the debt, the name of the original creditor, and statements about the consumer's dispute rights — not internal routing details." },
+    { section:"Communication", q:"What is the key difference between active listening and passive listening?",
+      options:[
+        "Active listening involves asking questions and verifying understanding; passive listening takes in information at face value with little regard for how it's communicated",
+        "Active listening means never interrupting the speaker; passive listening means responding immediately to everything said",
+        "Active listening is only used with angry consumers; passive listening is used in every other situation",
+        "Active listening requires taking written notes; passive listening does not"
+      ], correct:0,
+      explain:"Active listeners ask questions, verify understanding, and pay attention to how something is said. Passive listeners take information at face value and show little regard for the feeling behind it." },
+    { section:"Communication", q:"A specialist says, “Let me make sure I understand what you're saying,” then paraphrases the consumer's concern back to them. What is this verifying, and why does it matter beyond just being polite?",
+      options:[
+        "It verifies the consumer's identity before continuing the call",
+        "It verifies mutual understanding, which matters because asking questions is the only way to ensure a payment arrangement is actually financially feasible for the consumer",
+        "It satisfies a compliance requirement under the Mini-Miranda",
+        "It exists mainly to give the specialist time to think of a rebuttal"
+      ], correct:1,
+      explain:"Verifying understanding through paraphrasing ensures both parties are on the same page. Practically, it protects the arrangement being set up — asking and confirming is how you know it's actually feasible." },
+    { section:"Communication", q:"According to the training's illustration of phone communication, what carries most of the meaning in a call where the consumer can't see the specialist's face?",
+      options:[
+        "The specialist's title or role, more than how anything is said",
+        "The exact wording used, more than tone or delivery",
+        "The length of the call, since longer calls build more trust",
+        "Tone of voice — far more than the specific words chosen"
+      ], correct:3,
+      explain:"The training illustrates that tone carries the large majority of a phone conversation's impact, since the consumer can't see the specialist's face or expression." },
+    { section:"Communication", q:"When handling an aggressive consumer who wants to be in control of the conversation, which combination of tactics does the training recommend?",
+      options:[
+        "Ask only closed-ended questions to keep the conversation short and controlled",
+        "Interrupt firmly to establish control early, and avoid using their name to keep things professional",
+        "Let them tell their story without interruption, use their first name, avoid “you” statements, and use psychological pauses",
+        "Immediately transfer the call to a senior rep to avoid escalation"
+      ], correct:2,
+      explain:"Aggressive consumers want to feel heard and in control. The approach is to let them tell their story, use their first name respectfully, avoid “you” statements, and use psychological pauses." },
+    { section:"Communication", q:"What is a “psychological pause,” and what makes it an effective de-escalation tool rather than just “going quiet”?",
+      options:[
+        "It is a technique used only at the very end of a call, just before hanging up",
+        "It refers to pausing the call recording so nothing said is documented",
+        "It means waiting exactly sixty seconds before responding to any question",
+        "It deliberately exploits people's natural discomfort with silence, such as briefly placing an abusive caller on hold to let them sit with their own behavior"
+      ], correct:3,
+      explain:"A psychological pause deliberately uses people's discomfort with silence — for example, placing an upset caller briefly on hold — as a real de-escalation strategy, not simply staying quiet." },
+    { section:"Communication", q:"Why does the training recommend using close-ended questions with a “chatter” consumer type?",
+      options:[
+        "Because close-ended questions are required by compliance on every call regardless of consumer type",
+        "Because chatters respond poorly to any question that requires more than a one-word answer",
+        "Because chatters often talk about anything except the debt, so close-ended questions help redirect and keep the call on track",
+        "Because chatters are more likely to dispute the debt if asked open-ended questions"
+      ], correct:2,
+      explain:"Chatters can derail a call by discussing everything but the debt. Close-ended questions help the specialist take control and redirect without seeming rude." },
+    { section:"Communication", q:"What is the key distinction between empathy and sympathy, as taught in this training?",
+      options:[
+        "Empathy requires personally experiencing the exact same situation; sympathy does not",
+        "Empathy is understanding another person's situation and feelings; sympathy is feeling sorrow or pity without necessarily understanding it",
+        "Empathy is used only with complainers; sympathy is used only with aggressive consumers",
+        "Empathy and sympathy are functionally identical and used interchangeably in this training"
+      ], correct:1,
+      explain:"Empathy is the ability to identify and understand another's situation and feelings. Sympathy is feeling sorrow or pity without necessarily understanding the situation — a distinction that trips people up." },
+    { section:"Communication", q:"A “know-it-all” consumer insists they already understand the situation better than the specialist. What communication tool does the training recommend to build rapport in this situation?",
+      options:[
+        "Avoiding acknowledgment of anything they say, even when they're correct",
+        "Repeating the same information more forcefully until they agree",
+        "Asking only closed-ended questions to limit their opportunity to argue",
+        "Partnering statements, such as “What if we…” or “Let's try this”"
+      ], correct:3,
+      explain:"With know-it-alls, the training recommends staying respectful, acknowledging what they get right, and using partnering statements like “What if we…” to build rapport." },
+    { section:"Utah Family Expense", q:"Under Utah Code Section 30-2-9, who can be held responsible for family expenses incurred during a marriage?",
+      options:[
+        "Only the spouse who physically signed the original agreement",
+        "Both spouses, jointly or separately, regardless of which one personally signed the agreement",
+        "Only the spouse whose name appears on the account's billing statements",
+        "Neither spouse, unless a court order specifically assigns responsibility"
+      ], correct:1,
+      explain:"Utah Family Expense law makes both spouses chargeable for family expenses, regardless of who signed — they may be sued jointly or separately." },
+    { section:"Utah Family Expense", q:"For which types of purchases does the law specifically deny attorney's fees or collection fees against a non-signing spouse?",
+      options:[
+        "Food or clothing, and home improvements or repairs over $5,000",
+        "Medical bills for the couple's children, regardless of amount",
+        "Any purchase made before the marriage began",
+        "Rent or mortgage payments made during the marriage"
+      ], correct:0,
+      explain:"The law specifically excludes attorney's or collection fees against a non-signing spouse for food or clothing purchases, and for home improvements or repairs over $5,000." },
+    { section:"Utah Family Expense", q:"A couple divorces, and the decree assigns a jointly incurred debt solely to one ex-spouse. Does this release the other ex-spouse from the original contract?",
+      options:[
+        "Only if the decree was finalized within six months of the original debt being incurred",
+        "Yes — a divorce decree automatically overrides any prior joint contractual responsibility",
+        "No — contract law supersedes divorce decrees, so the decree alone doesn't erase the other spouse's contractual responsibility",
+        "Only if both spouses explicitly agreed to the reassignment in writing at the time of divorce"
+      ], correct:2,
+      explain:"Contract law supersedes divorce decrees. A decree assigning a debt to one ex-spouse doesn't, by itself, release the other from the original contract." },
+    { section:"Utah Family Expense", q:"A specialist learns a consumer separated from their spouse two months ago. What is the single most important next step, and what changes once it's documented?",
+      options:[
+        "Get the date of separation or divorce and document it immediately; MLC then stops pursuing the non-signing spouse once they no longer live with the debtor",
+        "Immediately close the account, since separation always ends both parties' responsibility",
+        "Continue pursuing both spouses exactly as before, since the marriage was valid when the debt was incurred",
+        "Wait until the divorce is finalized before taking any action or documenting anything"
+      ], correct:0,
+      explain:"Getting and documenting the date of separation or divorce is the single most important step. MLC stops pursuing the non-signing spouse once they no longer live with the debtor." },
+    { section:"Utah Family Expense", q:"An account has no spouse information listed for a married consumer. What should the specialist do, and where is the information recorded?",
+      options:[
+        "Leave the account as-is, since spouse information is optional unless a dispute arises",
+        "Perform a full “Square 4” to gather spouse information and Date of Marriage, entering it through “Qk Ed” and the Reference Screen",
+        "Immediately combine the account with any other account under the same last name",
+        "Escalate to a senior rep before collecting any spouse information at all"
+      ], correct:1,
+      explain:"A full Square 4 gathers spouse information, employment details, and email address. The Qk Ed screen is used to add it, and the Date of Marriage goes on the Reference Screen." },
+    { section:"Utah Family Expense", q:"Two separate consumers get married, and MLC identifies overlapping accounts between them. What is the correct procedure for combining those accounts?",
+      options:[
+        "Leave both accounts open and separate, since Utah Family Expense law doesn't apply to pre-marriage debts",
+        "Combine them into whichever account has the highest current balance",
+        "Create a brand-new account number for the combined household and close both originals",
+        "Combine them into the oldest existing account, changing the status to LECOMB and noting the request"
+      ], correct:3,
+      explain:"Accounts are combined into the oldest existing account, with the status changed to LECOMB and a note documenting the combination request." },
+    { section:"Credit Reporting", q:"What role does MLC play in credit reporting, and what control does MLC have over a consumer's resulting credit score?",
+      options:[
+        "MLC is a furnisher of credit information and has no say over the score impact of that reporting",
+        "MLC directly sets each consumer's credit score based on their payment history with MLC",
+        "MLC only reports information if a consumer specifically requests it",
+        "MLC determines creditworthiness independently of the credit bureaus"
+      ], correct:0,
+      explain:"MLC furnishes information to credit bureaus but has no control over the impact a specific reporting has on a person's credit score." },
+    { section:"Credit Reporting", q:"Under MLC's reporting guidelines, when can a medical balance be reported to credit bureaus, and what threshold applies?",
+      options:[
+        "Immediately upon receipt, regardless of balance size",
+        "After 12 months, and only if the original balance when received was greater than $500",
+        "After 35 days, matching the same timeline as non-medical balances",
+        "Only if the account has also reached the statute of limitations"
+      ], correct:1,
+      explain:"Medical balances are reported after 12 months, and only if the original balance received was greater than $500. Balances under $500 are never reported." },
+    { section:"Credit Reporting", q:"What happens to credit reporting once an account reaches its statute of limitations?",
+      options:[
+        "MLC will not report the account to credit bureaus once the statute of limitations has expired",
+        "MLC continues reporting the account exactly as before, since the debt is still legally owed",
+        "MLC reports the account at an accelerated rate to encourage faster resolution",
+        "MLC must report the account as “paid in full” regardless of actual payment status"
+      ], correct:0,
+      explain:"MLC will not report accounts to credit bureaus once the statute of limitations has expired on those accounts." },
+    { section:"Credit Reporting", q:"What are the two statute-of-limitations timeframes for debt collection, and what determines which one applies?",
+      options:[
+        "6 years for all debts regardless of documentation, with no shorter timeframe",
+        "4 years for medical debts, and 6 years for all other debt types",
+        "6 years for accounts with a signed financial agreement, and 4 years for accounts without one",
+        "4 years for accounts under $500, and 6 years for accounts over $500"
+      ], correct:2,
+      explain:"The timeframe depends on whether there's a signed financial agreement: 6 years with one, 4 years without one." },
+    { section:"Credit Reporting", q:"A consumer makes a payment on an account that has already passed its statute of limitations. What effect does this have?",
+      options:[
+        "The payment has no effect on the statute of limitations, which remains expired",
+        "The statute of limitations clock restarts from the date of that payment",
+        "The payment automatically voids the statute of limitations protection permanently",
+        "The payment must be refunded, since accepting it isn't permitted on statute accounts"
+      ], correct:1,
+      explain:"If a payment is made on a statute-of-limitations account, the clock for the statute of limitations starts back over from that payment date." },
+    { section:"Credit Reporting", q:"Which of these is a correct “do not” regarding how a specialist may discuss credit reporting with a consumer?",
+      options:[
+        "Do not refer consumers with credit report questions to the credit bureaus",
+        "Do not advise the consumer that MLC reports information fairly and accurately",
+        "Do not mention that some accounts are not being actively collected on",
+        "Do not imply that paying the debt will improve the consumer's credit score"
+      ], correct:3,
+      explain:"Specialists must not imply that paying will improve a score or that not paying will hurt it — MLC doesn't control that outcome and shouldn't imply otherwise." },
+    { section:"Intelligent Contacts", q:"What is Intelligent Contacts, and what two core functions does it provide?",
+      options:[
+        "A cloud-based platform for managing consumer communications, providing tools for automated dialing and compliance tracking",
+        "A payment processor used exclusively for taking debit and credit card payments",
+        "A credit bureau reporting tool used to submit monthly account updates",
+        "A document storage system used only for validation letters"
+      ], correct:0,
+      explain:"Intelligent Contacts is a cloud-based platform for managing consumer communications, offering automated dialing tools and compliance tracking." },
+    { section:"Intelligent Contacts", q:"A specialist speaks with a consumer who has consented to future contact and sets up a payment plan, but no payment is collected today. Which result code fits this outcome?",
+      options:[
+        "ATTEMPTS — No contact made, no message left",
+        "CCPIF — Communication with Consumer, Consent, Paid in Full",
+        "CN — Communication with Consumer, No consent, No Payment",
+        "CCPPN — Communication with Consumer, Consent, Payment plan, No payment today"
+      ], correct:3,
+      explain:"CCPPN reflects a conversation with consent, a payment plan set up, but no payment collected on that specific call." },
+    { section:"Intelligent Contacts", q:"How should a specialist end a call with a consumer, according to the training?",
+      options:[
+        "Wait for the consumer to end the call first — never hang up on them",
+        "End the call immediately once the consumer's issue appears resolved",
+        "End the call as soon as a payment has been processed, regardless of what the consumer is saying",
+        "End the call using the manual keypad rather than the red END CALL button"
+      ], correct:0,
+      explain:"At MLC, specialists should wait for the consumer to end the call first, then use the red END CALL button — there should always be a definite, mutual end to the call." },
+    { section:"Intelligent Contacts", q:"Why does the training emphasize always using the correct IC status (ready, lunch, break, training, etc.)?",
+      options:[
+        "Because statuses are only used to track vacation time and have no other function",
+        "Because incorrect statuses automatically dock pay from a specialist's paycheck",
+        "Because statuses signal availability accurately, which supports both workflow management and compliance tracking like 7-in-7",
+        "Because IC statuses are cosmetic and have no operational effect on the account"
+      ], correct:2,
+      explain:"Proper statuses ensure accurate tracking of productivity and compliance requirements like the 7-in-7 rule, and they support overall workflow management." },
+    { section:"Intelligent Contacts", q:"Which of these is listed as a legitimate use for the Call Forwarding feature in Intelligent Contacts?",
+      options:[
+        "Permanently ending a call without notifying the consumer",
+        "Transferring a call to a different representative or department, and sending LCM drops",
+        "Automatically dialing the next number in a manual campaign",
+        "Changing a consumer's TARP consent code mid-call"
+      ], correct:1,
+      explain:"Call forwarding is used to transfer calls to a different representative, send them to a different department, and for LCM drops." },
+    { section:"Intelligent Contacts", q:"Why does the training stress that a specialist must “always get consent to call back”?",
+      options:[
+        "Because consent to call back is only required for landline numbers, not cell phones",
+        "Because IC will not allow a second call to the same number under any circumstances",
+        "Because contacting a consumer again without documented consent risks violating consent and frequency-related compliance rules",
+        "Because callback consent replaces the need for verification on future calls"
+      ], correct:2,
+      explain:"Getting consent to call back protects against compliance risk tied to consent and contact-frequency rules covered elsewhere in training (such as TARP and Reg F)." },
+    { section:"Medicaid", q:"Before doing anything else on a Medicaid-related account, what should a specialist check first?",
+      options:[
+        "The account's assigned collector ID",
+        "The consumer's current employer, to determine ability to pay",
+        "The statute of limitations status on the account",
+        "The account reference for codes indicating Medicaid was previously checked"
+      ], correct:3,
+      explain:"The first step is checking the account reference for codes that may indicate Medicaid coverage was already checked previously." },
+    { section:"Medicaid", q:"An account's reference code reads “VE DENIED.” What does this indicate, and what is the specialist's responsibility?",
+      options:[
+        "The patient could not be located in the Medicaid system at all",
+        "Medicaid was billed and denied, meaning this is patient responsibility — the consumer's coverage has already been verified as not applicable",
+        "The patient only has pharmacy coverage through Medicaid, not medical coverage",
+        "The patient was identified but wasn't eligible on the date of service"
+      ], correct:1,
+      explain:"VE DENIED means Medicaid was billed and denied, making the balance patient responsibility. This has already been verified — no further Medicaid check is needed." },
+    { section:"Medicaid", q:"An account shows no Medicaid-related code at all. What should the specialist check before proceeding, in order?",
+      options:[
+        "The statute of limitations first, then the Medicaid type",
+        "Nothing — proceed directly to collecting as if Medicaid never applied",
+        "Account notes for a prior Medicaid check, then the Audit screen for a prior VERMED flip, before gathering new information if both are negative",
+        "Only the Audit screen, since account notes don't reflect Medicaid history"
+      ], correct:2,
+      explain:"With no code present, check account notes and the Audit screen for any prior Medicaid verification before gathering new Medicaid information from the consumer." },
+    { section:"Medicaid", q:"A consumer insists they had Medicaid coverage, even though the account already shows a denial code. What must happen next?",
+      options:[
+        "The specialist should immediately reverse the denial and stop collection based on the consumer's statement alone",
+        "The consumer must email proof of coverage, since MLC has already verified the consumer does not qualify",
+        "The account should be placed into VERMED without requesting any documentation",
+        "The specialist should escalate to a supervisor without asking the consumer for anything further"
+      ], correct:1,
+      explain:"If a denial code is already present, MLC has already verified non-qualification. An adamant consumer must provide proof of coverage via email before anything changes." },
+    { section:"Medicaid", q:"A specialist gathers new Medicaid information from a consumer whose account previously had no code at all. What should happen to the account?",
+      options:[
+        "The account should be flipped to STATUT regardless of Medicaid eligibility",
+        "The account should be immediately closed as MEDICD without further review",
+        "The affected account should be placed into VERMED status",
+        "Nothing changes until the consumer's claim is independently verified by a third party"
+      ], correct:2,
+      explain:"Once new Medicaid information has been gathered on an account that previously had no code, the affected account is placed into VERMED for review." },
+    { section:"Medicaid", q:"MLC confirms a consumer was covered by Medicaid for the dates of service, but the timely filing window for rebilling has already passed. What is the outcome?",
+      options:[
+        "The account is closed as MEDICD, since it is outside the timely filing window for rebilling",
+        "The account is rebilled to Medicaid regardless of the timely filing window",
+        "The account continues normal collection since timely filing doesn't affect collectability",
+        "The account is placed into VERMED indefinitely pending further review"
+      ], correct:0,
+      explain:"If MLC can verify Medicaid coverage but it's outside timely filing, the account is closed as MEDICD rather than rebilled or continued in collections." },
+    { section:"Payments", q:"What does the M.A.D. acronym stand for, and when must this information be obtained?",
+      options:[
+        "Method, Amount, Disposition — required only after a payment has already been processed",
+        "Method, Account, Deadline — required only for ACH payments",
+        "Manner, Amount, Discount — required only when a settlement is being offered",
+        "Method, Amount, Date — required before setting up any payment plan or obtaining any payment"
+      ], correct:3,
+      explain:"M.A.D. stands for Method, Amount, and Date. All three must be established before setting up any payment plan or obtaining any payment in general." },
+    { section:"Payments", q:"A consumer agrees to pay $400.00 through IntelliPay using a debit card. What is the total amount that will actually be charged?",
+      options:[
+        "$410.00, since a 2.5% processing fee applies to all card transactions",
+        "$400.00 exactly, with no additional fee for debit card payments",
+        "$402.95 — the $400.00 payment plus a $2.95 convenience fee",
+        "$402.95, but only if the payment is made online rather than by phone"
+      ], correct:2,
+      explain:"Once a payment amount is entered, a $2.95 convenience fee is automatically added, updating the total charged to the consumer." },
+    { section:"Payments", q:"According to the training's reminders before submitting a payment, what should a specialist do if they're unsure whether they read a card or account number back correctly?",
+      options:[
+        "Have the consumer read the number back themselves, rather than the specialist reading it back to the consumer",
+        "Read the number back to the consumer as usual, since this is always required regardless of certainty",
+        "Skip verification and proceed, since IntelliPay will flag any incorrect numbers automatically",
+        "Ask a supervisor to verify the number on the specialist's behalf before proceeding"
+      ], correct:0,
+      explain:"The reminder is explicit: do not read the consumer back their card or account number. If unsure, have them read it back to you instead." },
+    { section:"Payments", q:"A consumer calls after 3 p.m. asking to cancel a payment scheduled to auto-draft the next day. The PQ status alone may not stop it in time. What additional step is required?",
+      options:[
+        "The collector must call IntelliPay support directly to manually cancel the transaction",
+        "The collector must also update the result code on DebtNet to “Urgent”",
+        "The collector must wait until the payment posts and then process a refund",
+        "The collector must change the account status to PROBPAY instead of PQ"
+      ], correct:1,
+      explain:"PQ status may not stop next-day autopay if the request comes in after 3 p.m. In that case, the collector must also flag the result code as “Urgent” on DebtNet." },
+    { section:"Payments", q:"A consumer has a signed PNOTE and is actively making payments under status PNPAY. The specialist takes a payment today. What should the specialist NOT do?",
+      options:[
+        "Confirm the payment amount matches what the consumer agreed to",
+        "Process the payment through IntelliPay as usual",
+        "Flip the account status into PAY",
+        "Leave detailed notes about the payment on the account"
+      ], correct:2,
+      explain:"On PNPAY accounts, taking a payment should not cause the specialist to flip the status into PAY — the PNOTE-specific status should be preserved." },
+    { section:"Payments", q:"What distinguishes GARNPAY from LEGPAY and JDGPAY among the legal payment statuses?",
+      options:[
+        "GARNPAY applies only to non-legal accounts, unlike the other two",
+        "GARNPAY is used specifically when the consumer's wages are being garnished, while LEGPAY and JDGPAY relate to a signed VSPA and a judgment with a signed VSPA, respectively",
+        "GARNPAY and LEGPAY are identical statuses used interchangeably",
+        "GARNPAY is used before a judgment is entered, while JDGPAY is used only after garnishment ends"
+      ], correct:1,
+      explain:"GARNPAY specifically indicates wage garnishment. LEGPAY applies to a signed Voluntary Stipulated Payment Agreement, and JDGPAY applies once a judgment has been entered alongside a signed VSPA." },
+    { section:"Payments", q:"A consumer already has an autopay arrangement set up on their account, but wants to make a one-time payment today using a different card. How should the specialist enter the customer ID in IntelliPay?",
+      options:[
+        "Create an entirely new customer profile separate from the existing one",
+        "Enter the customer ID exactly as it appears in DebtNet, with no modification",
+        "Enter the customer ID followed by the payment amount instead of a letter",
+        "Enter the standard customer ID from DebtNet with an “A” appended after it"
+      ], correct:3,
+      explain:"For a one-time payment on an account with existing autopay set up, the specialist appends an “A” after the standard customer ID from DebtNet." },
+    { section:"Accounts and Statuses", q:"Why does the training stress checking the collector ID field before working an account, especially on inbound calls?",
+      options:[
+        "Because the collector ID determines the consumer's credit score impact",
+        "Because working an account outside your responsibility risks issues like handling a legal account, giving wrong information, or speaking with a litigious consumer",
+        "Because only the assigned collector is legally permitted to speak with any consumer at all",
+        "Because checking the collector ID is required only for outbound calls, not inbound ones"
+      ], correct:1,
+      explain:"Working an account outside your scope can mean working a legal account, giving wrong information, or speaking with a litigious consumer — checking collector ID first avoids these risks." },
+    { section:"Accounts and Statuses", q:"What does it mean for a collector list to be “open,” and how does the “first come, first serve” principle work in practice?",
+      options:[
+        "Open lists require management approval before any collector may work an account on them",
+        "Only the most senior collector on the floor may work accounts on an open list",
+        "Open lists rotate automatically to a new collector every 24 hours regardless of activity",
+        "Anyone can work an open list, and whoever resolves or gets the intent to resolve first may “PIN” the account into their own call list"
+      ], correct:3,
+      explain:"Open collector lists are available to everyone. Whoever works the account first and achieves resolution (or the intent to resolve) can PIN it into their own call list." },
+    { section:"Accounts and Statuses", q:"What is the practical difference between a VALIDT status and an ACTIVE status?",
+      options:[
+        "VALIDT means the account is within the validation period and should be treated more as a courtesy call, while ACTIVE means it's outside that period and next-step language is acceptable",
+        "VALIDT means the account is in legal, while ACTIVE means it is open for normal collection",
+        "VALIDT and ACTIVE are functionally identical statuses with different names",
+        "VALIDT applies only to medical accounts, while ACTIVE applies only to non-medical accounts"
+      ], correct:0,
+      explain:"VALIDT signals the account is inside the validation period, treated more as a courtesy call. ACTIVE means the account is outside that period, and next-step language is appropriate." },
+    { section:"Accounts and Statuses", q:"What does a STATUT status indicate about an account, and is the debt still owed?",
+      options:[
+        "The account is in active litigation and must be sent to a legal collector",
+        "The debt has been legally forgiven and is no longer owed under any circumstance",
+        "The account is outside the statute of limitations; the debt is still technically owed, but MLC is not actively pursuing it",
+        "The account has been paid in full and closed"
+      ], correct:2,
+      explain:"STATUT means the account is past the statute of limitations. The debt is still technically owed, but MLC stops actively pursuing collection on it." },
+    { section:"Accounts and Statuses", q:"A specialist encounters an account status beginning with “JDG” that isn't specifically listed on their reference sheet. What should they do?",
+      options:[
+        "Escalate directly to compliance rather than to a legal collector",
+        "Continue working the account normally, since unlisted statuses default to standard collection",
+        "Change the status to ACTIVE so it can be worked through normal channels",
+        "Send it to a legal collector — any status beginning with JDG (like GRN, LEG, or MTN) indicates a legal account"
+      ], correct:3,
+      explain:"Any status beginning with GRN, JDG, LEG, or MTN indicates a legal account and should be sent to a legal collector, even if the specific status isn't individually memorized." },
+    { section:"Accounts and Statuses", q:"What does priority code “9” typically indicate on an account, according to the training's common priority codes?",
+      options:[
+        "A bankrupt account",
+        "An account where the consumer is currently paying",
+        "An account tied to insurance billing",
+        "An attorney-represented account"
+      ], correct:0,
+      explain:"Among the common priority codes, 9 indicates a bankrupt account, distinct from 0 (paying), 2 (insurance billing), and 3 (attorney accounts)." },
+    { section:"Accounts and Statuses", q:"A specialist receives an inbound call for an account clearly assigned to a specific coworker, who is currently shown as available in Intelligent Contacts. What is the best-practice next step?",
+      options:[
+        "Place the consumer on hold indefinitely until the assigned rep becomes available",
+        "Immediately transfer the call without checking whether the rep is available first",
+        "Work the account as though it were the specialist's own, regardless of the rep's availability",
+        "Send a message to that rep in Google Chat to get the call to them, since they're available"
+      ], correct:3,
+      explain:"Best practice is to check the rep's availability in Intelligent Contacts first, and if available, message them in Google Chat to route the call to them." },
+  ];
+
+  const TOTAL = QUESTIONS.length;
+  const PASS_PCT = 80;
+  const PASS_COUNT = Math.ceil(TOTAL * PASS_PCT / 100);
+
+  // Fisher-Yates shuffle, returns a new array (does not mutate input)
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // Builds a fresh, randomized copy of the question set for one attempt:
+  // question order is shuffled, and each question's own option order is
+  // shuffled too (with the correct-answer index remapped to match).
+  function buildSessionQuestions(){
+    const questionOrder = shuffle(QUESTIONS);
+    return questionOrder.map(item => {
+      const optionOrder = shuffle(item.options.map((opt, i) => i)); // shuffled list of original indices
+      const newOptions = optionOrder.map(i => item.options[i]);
+      const newCorrect = optionOrder.indexOf(item.correct);
+      return Object.assign({}, item, { options: newOptions, correct: newCorrect });
+    });
+  }
+
+  let sessionQuestions = QUESTIONS;
+  let answers = new Array(TOTAL).fill(null);
+  let current = 0;
+  let phase = "intro"; // intro | quiz | results
+  let stats = { attempts: 0, best: 0 };
+
+  const root = document.getElementById("cardRoot");
+  const progressFill = document.getElementById("progressFill");
+  const progressLabel = document.getElementById("progressLabel");
+  const progressPct = document.getElementById("progressPct");
+  const statPill = document.getElementById("statPill");
+
+  function esc(s){
+    const d = document.createElement("div");
+    d.innerText = s;
+    return d.innerHTML;
+  }
+
+  async function loadStats(){
+    try{
+      const res = await window.storage.get("mlc-final-exam-stats", false);
+      if(res && res.value){
+        const parsed = JSON.parse(res.value);
+        stats.attempts = parsed.attempts || 0;
+        stats.best = parsed.best || 0;
+      }
+    }catch(e){ /* no prior stats, that's fine */ }
+    renderStatPill();
+  }
+
+  async function saveStats(scorePct){
+    stats.attempts += 1;
+    if(scorePct > stats.best) stats.best = scorePct;
+    try{
+      await window.storage.set("mlc-final-exam-stats", JSON.stringify(stats), false);
+    }catch(e){ /* non-fatal */ }
+    renderStatPill();
+  }
+
+  function renderStatPill(){
+    if(phase === "intro" && stats.attempts > 0){
+      statPill.innerHTML = `Attempt <b>${stats.attempts + 1}</b> · Best <b>${stats.best}%</b>`;
+    } else if(phase === "quiz"){
+      statPill.innerHTML = `Question <b>${current+1}</b> of <b>${TOTAL}</b>`;
+    } else {
+      statPill.innerHTML = `Attempt <b>${stats.attempts}</b>`;
+    }
+  }
+
+  function updateProgressBar(){
+    if(phase === "intro"){
+      progressFill.style.width = "0%";
+      progressLabel.textContent = "Not started";
+      progressPct.textContent = "0%";
+    } else if(phase === "quiz"){
+      const answeredCount = answers.filter(a => a !== null).length;
+      const pct = Math.round(((current) / TOTAL) * 100);
+      progressFill.style.width = pct + "%";
+      progressLabel.textContent = `Question ${current+1} of ${TOTAL}`;
+      progressPct.textContent = `${answeredCount} answered`;
+    } else {
+      progressFill.style.width = "100%";
+      progressLabel.textContent = "Complete";
+      progressPct.textContent = "100%";
+    }
+  }
+
+  function renderIntro(){
+    phase = "intro";
+    renderStatPill();
+    updateProgressBar();
+    let priorBlock = "";
+    if(stats.attempts > 0){
+      priorBlock = `<div class="prev-attempt">You've taken this check <b>${stats.attempts}</b> time${stats.attempts>1?"s":""} before. Best score so far: <b>${stats.best}%</b>.</div>`;
+    }
+    root.innerHTML = `
+      <div class="intro">
+        <h1>Ready for your certification check?</h1>
+        <p>This is the cumulative final exam, pulling questions from every training module: Collections 101, Compliance, Regulation F, Closed States, TARP, Validation, Communication, Utah Family Expense, Credit Reporting, Intelligent Contacts, Medicaid, Payments, and Accounts and Statuses. Questions apply the material to real call, account, and system scenarios, and your results break down by module so you know exactly where to review.</p>
+        <div class="rule-grid">
+          <div class="rule-item"><div class="num mono">${TOTAL}</div><div class="lbl">Questions</div></div>
+          <div class="rule-item"><div class="num mono">${PASS_PCT}%</div><div class="lbl">Required to pass (${PASS_COUNT}/${TOTAL})</div></div>
+        </div>
+        ${priorBlock}
+        <button class="btn btn-primary" id="startBtn">Start certification check</button>
+      </div>
+    `;
+    document.getElementById("startBtn").addEventListener("click", () => {
+      sessionQuestions = buildSessionQuestions();
+      answers = new Array(TOTAL).fill(null);
+      current = 0;
+      phase = "quiz";
+      renderQuiz();
+    });
+  }
+
+  function renderQuiz(){
+    renderStatPill();
+    updateProgressBar();
+    const item = sessionQuestions[current];
+    const letters = ["A","B","C","D"];
+
+    let dotsHtml = "";
+    for(let i=0;i<TOTAL;i++){
+      const ans = answers[i] !== null ? "answered" : "";
+      const cur = i === current ? "current" : "";
+      dotsHtml += `<button class="qdot ${ans} ${cur}" data-idx="${i}" aria-label="Go to question ${i+1}">${i+1}</button>`;
+    }
+
+    let optsHtml = "";
+    item.options.forEach((opt, i) => {
+      const sel = answers[current] === i ? "selected" : "";
+      optsHtml += `
+        <button class="option ${sel}" data-idx="${i}">
+          <span class="letter">${letters[i]}</span>
+          <span>${esc(opt)}</span>
+        </button>`;
+    });
+
+    const allAnswered = answers.every(a => a !== null);
+    const isLast = current === TOTAL - 1;
+
+    root.innerHTML = `
+      <div class="qnav">${dotsHtml}</div>
+      <div class="q-eyebrow">${esc(item.section)}</div>
+      <p class="q-text">${esc(item.q)}</p>
+      <div class="options">${optsHtml}</div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" id="prevBtn" ${current === 0 ? "disabled" : ""}>Back</button>
+        ${isLast
+          ? `<button class="btn btn-primary" id="submitBtn" ${allAnswered ? "" : "disabled"}>Submit for scoring</button>`
+          : `<button class="btn btn-primary" id="nextBtn" ${answers[current] === null ? "disabled" : ""}>Next question</button>`
+        }
+      </div>
+    `;
+
+    root.querySelectorAll(".option").forEach(btn => {
+      btn.addEventListener("click", () => {
+        answers[current] = parseInt(btn.dataset.idx, 10);
+        renderQuiz();
+      });
+    });
+    root.querySelectorAll(".qdot").forEach(btn => {
+      btn.addEventListener("click", () => {
+        current = parseInt(btn.dataset.idx, 10);
+        renderQuiz();
+      });
+    });
+    const prevBtn = document.getElementById("prevBtn");
+    if(prevBtn) prevBtn.addEventListener("click", () => { current = Math.max(0, current-1); renderQuiz(); });
+    const nextBtn = document.getElementById("nextBtn");
+    if(nextBtn) nextBtn.addEventListener("click", () => { current = Math.min(TOTAL-1, current+1); renderQuiz(); });
+    const submitBtn = document.getElementById("submitBtn");
+    if(submitBtn) submitBtn.addEventListener("click", () => { renderResults(); });
+  }
+
+  async function renderResults(){
+    phase = "results";
+    let correctCount = 0;
+    const sectionTally = {};
+    sessionQuestions.forEach((q, i) => {
+      if(!sectionTally[q.section]) sectionTally[q.section] = { correct:0, total:0 };
+      sectionTally[q.section].total += 1;
+      if(answers[i] === q.correct){
+        correctCount += 1;
+        sectionTally[q.section].correct += 1;
+      }
+    });
+    const pct = Math.round((correctCount / TOTAL) * 100);
+    const passed = correctCount >= PASS_COUNT;
+    try { window.MLC_REPORT && window.MLC_REPORT({ score: correctCount, total: TOTAL, pct: pct, passed: passed, breakdown: sectionTally,
+      missed: sessionQuestions.map(function(q, i){ return { q: q.q, picked: answers[i] == null ? "(blank)" : q.options[answers[i]], correct: q.options[q.correct], ok: answers[i] === q.correct }; }).filter(function(m){ return !m.ok; }) }); } catch(e){ console.warn(e); }
+
+
+    await saveStats(pct);
+    updateProgressBar();
+
+    let sectionsHtml = "";
+    Object.keys(sectionTally).forEach(sec => {
+      const t = sectionTally[sec];
+      const barPct = Math.round((t.correct / t.total) * 100);
+      sectionsHtml += `
+        <div class="sec-row">
+          <div class="sec-name">${esc(sec.replace(/^Part \d+ · /,""))}</div>
+          <div class="sec-bar-track"><div class="sec-bar-fill" style="width:${barPct}%"></div></div>
+          <div class="sec-frac mono">${t.correct}/${t.total}</div>
+        </div>`;
+    });
+
+    let reviewHtml = "";
+    const letters = ["A","B","C","D"];
+    sessionQuestions.forEach((q, i) => {
+      const userIdx = answers[i];
+      const isRight = userIdx === q.correct;
+      reviewHtml += `
+        <div class="review-item ${isRight ? "right" : "wrong"}">
+          <div class="review-top">
+            <span class="${isRight ? "tag-right" : "tag-wrong"}">${isRight ? "✓ Correct" : "✕ Missed"}</span>
+            <span class="mono" style="color:var(--ink-faint)">Q${i+1} · ${esc(q.section.replace(/^Part \d+ · /,""))}</span>
+          </div>
+          <p class="review-q">${esc(q.q)}</p>
+          ${isRight
+            ? `<div class="review-ans"><span class="lbl">Your answer:</span> ${letters[userIdx]}. ${esc(q.options[userIdx])}</div>`
+            : `<div class="review-ans"><span class="lbl">Your answer:</span> ${userIdx === null ? "— none —" : letters[userIdx] + ". " + esc(q.options[userIdx])}</div>
+               <div class="review-ans"><span class="lbl">Correct answer:</span> ${letters[q.correct]}. ${esc(q.options[q.correct])}</div>`
+          }
+          <div class="review-explain">${esc(q.explain)}</div>
+        </div>`;
+    });
+
+    root.innerHTML = `
+      <div class="result-head">
+        <div class="score-dial" style="--pct:${pct}">
+          <div class="pct">${pct}%</div>
+          <div class="frac">${correctCount}/${TOTAL}</div>
+        </div>
+        <div>
+          <div class="stamp ${passed ? "pass" : "fail"}">${passed ? "PASSED" : "NOT YET"}</div>
+          <div class="result-sub">${passed
+            ? "You've met the 80% bar on the final exam. Nice work — that's every module covered."
+            : `You needed ${PASS_COUNT}/${TOTAL} (80%) to pass. Review the missed questions below, then retake when ready.`}</div>
+        </div>
+      </div>
+
+      <div class="section-breakdown">
+        <h3>Score by section</h3>
+        ${sectionsHtml}
+      </div>
+
+      <div class="review-list">
+        ${reviewHtml}
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-ghost" id="retakeBtn">Retake the check</button>
+      </div>
+    `;
+
+    document.getElementById("retakeBtn").addEventListener("click", () => {
+      renderIntro();
+    });
+  }
+
+  loadStats().then(renderIntro);
+})();
+</script>
+</body>
+</html>
